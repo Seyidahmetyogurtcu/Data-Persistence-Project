@@ -3,29 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class MainManager : MonoBehaviour
 {
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
-
     public Text ScoreText;
+    //[HideInInspector]public Text BestScoreText;
     public GameObject GameOverText;
-    
+    public static MainManager Instance;
     private bool m_Started = false;
-    private int m_Points;
-    
+    public int m_Points;
+
     private bool m_GameOver = false;
 
-    
+    private void Awake()
+    {
+        Instance = this;
+        //    BestScoreText = GameObject.Find("Best Score Text").GetComponent<Text>();
+        GameManager.Instance.InitBestScore();
+    }
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        
-        int[] pointCountArray = new [] {1,1,2,2,5,5};
+
+        int[] pointCountArray = new[] { 1, 1, 2, 2, 5, 5 };
         for (int i = 0; i < LineCount; ++i)
         {
             for (int x = 0; x < perLine; ++x)
@@ -58,8 +69,15 @@ public class MainManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.InitBestScore();
+                }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.J)) { SceneManager.LoadScene(0); } //for test
     }
 
     void AddPoint(int point)
@@ -72,5 +90,16 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (GameManager.Instance != null)
+        {
+            if (GameManager.Instance.BestScoreValue < m_Points)
+            {
+                GameManager.Instance.BestScoreValue = m_Points;
+                GameManager.Instance.SetBestScore();
+                GameManager.Instance.SetBestScoreText();
+                GameManager.Instance.SaveBestScore();
+            }
+        }
     }
 }
