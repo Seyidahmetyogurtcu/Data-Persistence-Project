@@ -95,11 +95,15 @@ public class MainManager : MonoBehaviour
         {
             if (GameManager.Instance.BestScoreValue < m_Points)
             {
-                GameManager.Instance.BestScoreValue = m_Points;
-                GameManager.Instance.SetBestScore();
-                GameManager.Instance.SetBestScoreText();
-                GameManager.Instance.SaveBestScore();
+                UpdateBestScore();
             }
         }
+    }
+    private void UpdateBestScore()
+    {
+        GameManager.Instance.BestScoreValue = m_Points;
+        GameManager.Instance.SetBestScore();
+        GameManager.Instance.SetBestScoreText();
+        GameManager.Instance.SaveBestScore();
     }
 }

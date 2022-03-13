@@ -6,17 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class MenuUIHandler : MonoBehaviour
 {
-    //private void Start()
-    //{
-    //    GameManager.Instance.LoadBestScore();//get
-    //    GameManager.Instance.SetBestScore();//set
-    //    GameManager.Instance.SetBestScoreText();//Write
-    //}
     public void StartNew()
     {
         GameManager.Instance.GetPlayerName();
-        SceneManager.LoadScene(1);//done
-        //GameManager.Instance.LoadBestScore();
+        SceneManager.LoadScene(1);
         GameManager.Instance.InitBestScore();
     }
 

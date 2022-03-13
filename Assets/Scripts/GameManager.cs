@@ -11,16 +11,6 @@ public class GameManager : MonoBehaviour
 
     public static string PlayerName;
     public int BestScoreValue;
-    #region prop
-    //private string bestValue;
-
-    //public string BestScore
-    //{
-    //    get { return bestValue;}
-    //    set { bestValue = value; }
-    //}
-
-    #endregion
     public static string BestScore;
 
     public static GameManager Instance;
@@ -58,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerName = PlayerNameText.text;
     }
-    public void SetBestScore()//Todo:is it "BEST" score
+    public void SetBestScore()
     {
         BestScore = "Best Score" + ":" + PlayerName + ":" + BestScoreValue;
     }
